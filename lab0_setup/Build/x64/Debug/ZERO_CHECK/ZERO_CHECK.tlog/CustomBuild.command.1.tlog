@@ -1,0 +1,10 @@
+^C:\USERS\NONI\DOCUMENTS\GRAPHICS\COMPUTERGRAPHICS\LAB0_SETUP\BUILD\CMAKEFILES\4E11D432D0A7B6E48CA76EB7D6BD3A4F\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup -BC:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup/Build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup/Build/Lab0.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

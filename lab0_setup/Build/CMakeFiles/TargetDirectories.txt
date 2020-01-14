@@ -1,0 +1,3 @@
+C:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup/Build/CMakeFiles/Lab0.dir
+C:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup/Build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup/Build/CMakeFiles/ZERO_CHECK.dir

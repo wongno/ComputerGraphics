@@ -1,0 +1,8 @@
+﻿  Automatic MOC for target Lab0
+  Building Custom Rule C:/Users/Noni/Documents/Graphics/ComputerGraphics/lab0_setup/CMakeLists.txt
+  mocs_compilation.cpp
+  BasicWidget.cpp
+  Lab0.cpp
+  main.cpp
+  Generating Code...
+  Lab0.vcxproj -> C:\Users\Noni\Documents\Graphics\ComputerGraphics\lab0_setup\Build\Debug\Lab0.exe
