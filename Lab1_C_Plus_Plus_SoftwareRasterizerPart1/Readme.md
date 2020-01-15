@@ -10,13 +10,17 @@
 
 ## Modify this section
 
-- How many hours did it take you to complete this lab?
+- How many hours did it take you to complete this lab? 
+  - 2 hours (not including setup)
 - Did you collaborate with any other students/TAs/Professors?
+  - A little bit, Anika Jagow shared some useful online resources with me
 - Did you use any external resources? (Cite them below)
-  - tbd
-  - tbd
+  - http://www.sunshine2k.de/coding/java/TriangleRasterization/TriangleRasterization.html
+  - https://stackoverflow.com/questions/243945/calculating-a-2d-vectors-cross-product
 - (Optional) What was your favorite part of the lab?
+  - Getting it to work!
 - (Optional) How would you improve the lab?
+  - For Part 1, I initially wasn't sure how to check whether 'cl main.cpp' worked. main.exe was created, but when I rand it, I didn't realize that it was creating a new ppm image (until much later). I looked into installing mingW on my laptop, but wasn't sure where to look for it or how to get it properly set up. It would be nice to have some references on how to get that set up on your computer.
 
 ## Logistics
 
