@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Noni\Documents\Graphics\ComputerGraphics\Assignment0_CPlusPlus\new_build\Assignment0_autogen\mocs_compilation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Noni\Documents\Graphics\ComputerGraphics\Assignment0_CPlusPlus\src\ppm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Noni\Documents\Graphics\ComputerGraphics\Assignment0_CPlusPlus\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Noni\Documents\Graphics\ComputerGraphics\Assignment0_CPlusPlus\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2A168A73-E0C8-3EDD-93D6-C942AD9F7DFE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

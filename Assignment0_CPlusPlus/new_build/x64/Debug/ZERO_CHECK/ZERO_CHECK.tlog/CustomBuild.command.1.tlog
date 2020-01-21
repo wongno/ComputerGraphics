@@ -1,0 +1,10 @@
+^C:\USERS\NONI\DOCUMENTS\GRAPHICS\COMPUTERGRAPHICS\ASSIGNMENT0_CPLUSPLUS\NEW_BUILD\CMAKEFILES\F3CBC728C33F71DB6DF79CF1C1B0EF24\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Noni/Documents/Graphics/ComputerGraphics/Assignment0_CPlusPlus -BC:/Users/Noni/Documents/Graphics/ComputerGraphics/Assignment0_CPlusPlus/new_build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Noni/Documents/Graphics/ComputerGraphics/Assignment0_CPlusPlus/new_build/Assignment0.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

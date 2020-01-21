@@ -1,0 +1,10 @@
+^C:\USERS\NONI\DOCUMENTS\GRAPHICS\COMPUTERGRAPHICS\ASSIGNMENT0_CPLUSPLUS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Noni/Documents/Graphics/ComputerGraphics/Assignment0_CPlusPlus -BC:/Users/Noni/Documents/Graphics/ComputerGraphics/Assignment0_CPlusPlus/new_build --check-stamp-file C:/Users/Noni/Documents/Graphics/ComputerGraphics/Assignment0_CPlusPlus/new_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
