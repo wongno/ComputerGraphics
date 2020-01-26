@@ -10,6 +10,8 @@
 #define PPM_H
 
 #include <string>
+#include <vector>
+
 
 class PPM{
 public:
@@ -35,13 +37,22 @@ public:
     inline int getHeight(){ return m_height; }
 // NOTE:    You may add any helper functions you like in the
 //          private section.
-private:    
+private:
+    // Store max rgb value of ppm file
+    int m_maxRGB;
     // Store the raw pixel data here
     // Data is R,G,B format
     unsigned char* m_PixelData;
     // Store width and height of image.
     int m_width{0};
     int m_height{0};
+
+    // returns True if a string is a comment with '#'
+    bool isComment(std::string line);
+
+    // returns vector list of string, removing spaces
+    std::vector<std::string> split(std::string s);
+
 };
 
 

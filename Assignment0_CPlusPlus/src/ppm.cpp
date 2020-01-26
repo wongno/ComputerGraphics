@@ -40,8 +40,7 @@ PPM::PPM(std::string fileName){
                     else {
                         m_height = std::stoi(results[i]);
                     }
-                }
-               
+                }              
             }
             if (count == 2) { // max rgb
                 std::vector<std::string> max = split(line);
@@ -50,14 +49,12 @@ PPM::PPM(std::string fileName){
             count += 1;
             compiled += line;
             compiled += " ";
-        }
-
-                  
+        }                
     }
     m_PixelData = new unsigned char [m_width * m_height * 3];
     std::vector<std::string> comp = split(compiled);
     
-    // don't include the first 3 lines of data (header, width & height, max rgb)
+    // doesn't include the first 3 lines of data (header, width & height, max rgb)
     for (int i = 4; i < comp.size(); i++) {
         m_PixelData[i-4]= std::stoi(comp[i]);
     }
@@ -101,12 +98,14 @@ void PPM::setPixel(int x, int y, int R, int G, int B){
     m_PixelData[index + 2] = B;
 }
 
+// returns true whether a line is a comment and contains '#'
 bool PPM::isComment(std::string line) {
     std::string::size_type found = line.find_first_not_of(" ");
     char foundChar = line[found];
     return foundChar == '#';
 }
 
+// splits a string by white spaces and places them into a vector of strings
 std::vector<std::string> PPM::split(std::string s) {
     std::regex regex("\\s+");
     std::vector<std::string> out(
