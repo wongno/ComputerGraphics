@@ -106,14 +106,13 @@ bool unitTest2() {
 // Sample unit test comparing against GLM.
 // TODO: Test against glm::scale
 bool unitTest3() {
-    glm::mat4 glmScale = glm::mat4(2.0f);
+    glm::mat4 glmScale = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f));
     Vector4f a(1.0f, 0, 0, 0);
     Vector4f b(0.0f, 1.0f, 0, 0);
     Vector4f c(0, 0, 1.0f, 0);
     Vector4f d(0, 0, 0, 1.0f);
     Matrix4f myScaled(a, b, c, d);
-    myScaled.MakeScale(2.0f, 2.0f, 2.0f);
-
+    myScaled = myScaled.MakeScale(2.0f, 2.0f, 2.0f);
     if (
         glmScale[0][0] == myScaled[0][0] &&
         glmScale[0][1] == myScaled[0][1] &&
@@ -250,8 +249,7 @@ bool unitTestVector9() {
     Vector4f v = Vector4f(-5, 2, 0, 10);
     float gMag = glm::length(gv);
     float vMag = Magnitude(v);
-    std::cout << gMag << std::endl;
-    std::cout << vMag << std::endl;
+
 
     return gMag == vMag;
 }
@@ -480,22 +478,6 @@ bool unitTestMatrix5() {
         1.0f, 2.0f, 3.0f, 10.0f,
         3.0f, 2.0f, 4.0f, 3.0f);
     Matrix4f mMult = m3 * m4;
-    std::cout << m3[0][0] << std::endl;
-    std::cout << m3[0][1] << std::endl;
-    std::cout << m3[0][2] << std::endl;
-    std::cout << m3[1][0] << std::endl;
-    std::cout << "difference" << std::endl;
-    std::cout << g1[0][0] << std::endl;
-    std::cout << g1[0][1] << std::endl;
-    std::cout << g1[0][2] << std::endl;
-    std::cout << g1[1][0] << std::endl;
-
-
-
-    std::cout << "difference" << std::endl;
-
-    std::cout << m3[0][1] << std::endl;
-
 
     if (gMult[0][0] == mMult[0][0] &&
         gMult[0][1] == mMult[0][1] &&
@@ -541,12 +523,6 @@ bool unitTestMatrix6() {
         25.0f, 26.0f, 27.0f, 28.0f,
         29.0f, 30.0f, 31.0f, 32.0f);
     Matrix4f multM = m1 * m2;
-    for (int j = 0; j < 4; j++) {
-        for (int i = 0; i < 4; i++) {
-            std::cout << multG[j][i] << std::endl;
-            std::cout << multM[j][i] << std::endl;
-        }
-    }
     return true;
 }
 
@@ -570,10 +546,7 @@ bool unitTestMatrix7() {
     Vector4f m2 = Vector4f(
         1.0f, 2.0f, 3.0f, 4.0f);
     Vector4f multM = m1 * m2;
-    for (int j = 0; j < 4; j++) {
-        std::cout << multG[j] << std::endl;
-        std::cout << multM[j] << std::endl;
-    }
+   
     return true;
 }
 
@@ -600,12 +573,7 @@ bool unitTestMatrix8() {
         Vector4f(25.0f, 26.0f, 27.0f, 28.0f),
         Vector4f(29.0f, 30.0f, 31.0f, 32.0f));
     Matrix4f multM = m1 * m2;
-    for (int j = 0; j < 4; j++) {
-        for (int i = 0; i < 4; i++) {
-            std::cout << multG[j][i] << std::endl;
-            std::cout << multM[j][i] << std::endl;
-        }
-    }
+    
     return true;
 }
 
@@ -615,12 +583,12 @@ int main() {
     unsigned int testsPassed = 0;
 
     // Run 'unit tests'
-    /*std::cout << "Passed 0: " << unitTest0() << " \n";
+    std::cout << "Passed 0: " << unitTest0() << " \n";
     std::cout << "Passed 1: " << unitTest1() << " \n";
     std::cout << "Passed 2: " << unitTest2() << " \n";
     std::cout << "Passed 3: " << unitTest3() << " \n";
     std::cout << "Passed 4: " << unitTest4() << " \n";
-    std::cout << "Passed 5: " << unitTest5() << " \n";*/
+    std::cout << "Passed 5: " << unitTest5() << " \n";
     std::cout << "Passed Vector 1: " << unitTestVector1() << " \n";
     std::cout << "Passed Vector 2: " << unitTestVector2() << " \n";
     std::cout << "Passed Vector 3: " << unitTestVector3() << " \n";
