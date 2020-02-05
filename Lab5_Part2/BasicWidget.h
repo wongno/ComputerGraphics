@@ -20,6 +20,8 @@ private:
   QString fragmentShaderString() const;
   void createShader();
   QOpenGLVertexArrayObject vao_;
+  int dir = 3;
+  
 
 protected:
   // Required interaction overrides
@@ -50,6 +52,14 @@ protected:
 public:
   BasicWidget(QWidget* parent=nullptr);
   virtual ~BasicWidget();
+
+  void setDir(int x) {
+      dir = x;
+  }
+
+  int getDir() {
+      return dir;
+  }
   
   // Make sure we have some size that makes sense.
   QSize sizeHint() const {return QSize(800,600);}
