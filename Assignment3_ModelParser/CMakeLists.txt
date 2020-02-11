@@ -17,9 +17,10 @@ include_directories(
 )
 
 set(srcs
-  src/BasicWidget.cpp
-  src/Application.cpp
-  src/main.cpp
+  Obj.cpp
+  BasicWidget.cpp
+  Application.cpp
+  main.cpp
 )
 
 add_executable(Lab
