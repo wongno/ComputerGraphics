@@ -6,13 +6,13 @@
 #include <QtCore>
 #include <QtWidgets>
 
-class Application : public QMainWindow
+class App : public QMainWindow
 {
   Q_OBJECT
 
 public:
-  Application(QWidget* parent=0);
-  virtual ~Application();
+  App(QWidget* parent=0);
+  virtual ~App();
   
 signals:
 
