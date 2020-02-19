@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**
  * Support code written by Erik W. Anderson
  */
@@ -12,7 +11,6 @@
 #include "Obj.h"
 
 int main(int argc, char** argv) {
-    Obj o("./objects/bunny.obj");
   QApplication a(argc, argv);
   QString appDir = a.applicationDirPath();
   QDir::setCurrent(appDir);

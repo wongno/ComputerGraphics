@@ -1,5 +1,6 @@
 #include "BasicWidget.h"
 #include "Obj.h"
+#include <iostream>
 
 //////////////////////////////////////////////////////////////////////
 // Publics
@@ -35,7 +36,7 @@ QString BasicWidget::vertexShaderString() const
         "void main()\n"
         "{\n"
         "  gl_Position = vec4(position, 1.0);\n"
-        "  vertColor = color;\n"
+        "  vertColor = vec4(1.0,1.0,1.0,1.0);\n"
         "}\n";
     return str;
 }
@@ -80,15 +81,66 @@ void BasicWidget::keyReleaseEvent(QKeyEvent* keyEvent)
 {
     // TODO
     // Handle key events here.
-    if (keyEvent->key() == Qt::Key_Left) {
-        qDebug() << "Left Arrow Pressed";
-        setDir(3);
+
+    if (keyEvent->key() == Qt::Key_1) {
+        qDebug() << "1 Pressed";
+        BasicWidget::setShapeType(1);
+        std::vector<float> s = o.getVertices();
+        float* arr = &s[0];
+
+        std::vector<unsigned int> s2 = o.getFaces();
+        // TODO: Change number of indices drawn
+        //std::vector<unsigned int> s2 = o.getFaces();
+        unsigned int* arr2 = &s2[0];
+
+        vbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+        vbo_.create();
+        vbo_.bind();
+        vbo_.allocate(arr, s.size() * sizeof(GL_FLOAT));
+
+        ibo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+        ibo_.create();
+        ibo_.bind();
+        ibo_.allocate(arr2, s2.size() * sizeof(GL_INT));
         update();  // We call update after we handle a key press to trigger a redraw when we are ready
     }
-    else if (keyEvent->key() == Qt::Key_Right) {
-        qDebug() << "Right Arrow Pressed";
-        setDir(6);
+    else if (keyEvent->key() == Qt::Key_2) {
+        qDebug() << "2 Pressed";
+        BasicWidget::setShapeType(2);
+        std::vector<float> e = o.getVertices();
+        float* arr = &e[0];
+
+        std::vector<unsigned int> e2 = o.getFaces();
+        // TODO: Change number of indices drawn
+        //std::vector<unsigned int> s2 = o.getFaces();
+        unsigned int* arr2 = &e2[0];
+
+        vbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+        vbo_.create();
+        vbo_.bind();
+        vbo_.allocate(arr, e.size() * sizeof(GL_FLOAT));
+
+        ibo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+        ibo_.create();
+        ibo_.bind();
+        ibo_.allocate(arr2, e2.size() * sizeof(GL_INT));
         update();  // We call update after we handle a key press to trigger a redraw when we are ready
+    }
+    else if (keyEvent->key() == Qt::Key_Q) {
+        qDebug() << "Q Pressed";
+        exit(1);  // We call update after we handle a key press to trigger a redraw when we are ready
+    }
+    else if (keyEvent->key() == Qt::Key_W) {
+        qDebug() << "W Pressed";
+        if (frameType == 1) {
+            BasicWidget::setWireframe(2);
+            update();
+        }
+        else {
+            BasicWidget::setWireframe(1);
+            update();
+        }
+          // We call update after we handle a key press to trigger a redraw when we are ready
     }
     else {
         qDebug() << "You Pressed an unsupported Key!";
@@ -111,29 +163,21 @@ void BasicWidget::initializeGL()
 
     // Set up our shaders.
     createShader();
+    std::vector<float> s = o.getVertices();
+    float* arr = &s[0];
+
+    std::vector<unsigned int> s2 = o.getFaces();
+    unsigned int* arr2 = &s2[0];
+
+    std::vector<float> s3 = o.getNormals();
+    float* arr3 = &s3[0];
+
+    std::cout << "size: " << s2.size() << ", " << s.size() << "\n";
 
     // TODO:  Add vertex and index data to draw two triangles
     // Define our verts
-    static const GLfloat verts[12] =
-    {
-      -0.8f, -0.8f, 0.0f, // Left vertex position
-      0.8f, -0.8f, 0.0f,  // right vertex position
-      -0.8f,  0.8f, 0.0f,  // Top vertex position
-      0.8f, 0.8f, 0.0f
-    };
-    // Define our vert colors
-    static const GLfloat colors[16] =
-    {
-        1.0f, 0.0f, 0.0f, 1.0f, // red
-        0.0f, 1.0f, 0.0f, 1.0f, // green
-        0.0f, 0.0f, 1.0f, 1.0f, // blue
-        1.0f, 1.0f, 0.0f, 1.0f  // yellow
-    };
-    // Define our indices 14904, 2503
-    static const GLuint idx[6] =
-    {
-        0, 1, 2, 2, 1, 3
-    };
+    
+    
         // ENDTODO
     // Set up our buffers and our vao
   // Temporary bind of our shader.
@@ -143,14 +187,14 @@ void BasicWidget::initializeGL()
     vbo_.create();
     // Bind our vbo inside our vao
     vbo_.bind();
-    vbo_.allocate(verts, 12 * sizeof(GL_FLOAT));
+    vbo_.allocate(arr, s.size() * sizeof(GL_FLOAT));
 
     // TODO:  Generate our color buffer
     cbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
     cbo_.create();
     // Bind our vbo inside our vao
     cbo_.bind();
-    cbo_.allocate(colors, 16 * sizeof(GL_FLOAT));
+    cbo_.allocate(arr3, s3.size() * sizeof(GL_FLOAT));
     // ENDTODO
 
     // TODO:  Generate our index buffer
@@ -158,7 +202,7 @@ void BasicWidget::initializeGL()
     ibo_.create();
     // Bind our vbo inside our vao
     ibo_.bind();
-    ibo_.allocate(idx, 6 * sizeof(GL_FLOAT));
+    ibo_.allocate(arr2, s2.size() * sizeof(GL_INT));
     // ENDTODO
 
     // Create a VAO to keep track of things for us.
@@ -193,68 +237,36 @@ void BasicWidget::paintGL()
 
     shaderProgram_.bind();
     vao_.bind();
-    // TODO: Change number of indices drawn
-    glDrawElements(GL_TRIANGLES, getDir(), GL_UNSIGNED_INT, 0);
+    //std::vector<float> s = o.getVertices();
+    //float* arr = &s[0];
+
+    //std::vector<unsigned int> s2 = o.getFaces();
+    //// TODO: Change number of indices drawn
+    ////std::vector<unsigned int> s2 = o.getFaces();
+    //unsigned int* arr2 = &s2[0];
+
+    //vbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    //vbo_.create();
+    //vbo_.bind();
+    //vbo_.allocate(arr, s.size() * sizeof(GL_FLOAT));
+
+    //ibo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    //ibo_.create();
+    //ibo_.bind();
+    //ibo_.allocate(arr2, s2.size() * sizeof(GL_INT));
+
+    if (frameType == 1)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+
+    if (frameType == 2)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+
+    glDrawElements(GL_TRIANGLES, o.getFaces().size() * 3, GL_UNSIGNED_INT, 0);
     // ENDTODO
-    vao_.release();
-    shaderProgram_.release();
-
+   /* vao_.release();
+    shaderProgram_.release();*/
 }
-
-//#include "BasicWidget.h"
-//
-////////////////////////////////////////////////////////////////////////
-//// Publics
-//BasicWidget::BasicWidget(QWidget* parent) : QOpenGLWidget(parent), vbo_(QOpenGLBuffer::VertexBuffer), cbo_(QOpenGLBuffer::VertexBuffer), ibo_(QOpenGLBuffer::IndexBuffer)
-//{
-//  setFocusPolicy(Qt::StrongFocus);
-//}
-//
-//BasicWidget::~BasicWidget()
-//{
-//}
-//
-////////////////////////////////////////////////////////////////////////
-//// Privates
-//
-/////////////////////////////////////////////////////////////////////////
-//// Protected
-//void BasicWidget::keyReleaseEvent(QKeyEvent* keyEvent)
-//{
-//  // TODO
-//  // Handle key events here.
-//  qDebug() << "You Pressed an unsupported Key!";
-//  // ENDTODO
-//}
-//void BasicWidget::initializeGL()
-//{
-//  makeCurrent();
-//  initializeOpenGLFunctions();
-//
-//  QOpenGLContext* curContext = this->context();
-//  qDebug() << "[BasicWidget]::initializeGL() -- Context Information:";
-//  qDebug() << "  Context Valid: " << std::string(curContext->isValid() ? "true" : "false").c_str();
-//  qDebug() << "  GL Version Used: " << curContext->format().majorVersion() << "." << curContext->format().minorVersion();
-//  qDebug() << "  Vendor: " << reinterpret_cast<const char*>(glGetString(GL_VENDOR));
-//  qDebug() << "  Renderer: " << reinterpret_cast<const char*>(glGetString(GL_RENDERER));
-//  qDebug() << "  Version: " << reinterpret_cast<const char*>(glGetString(GL_VERSION));
-//  qDebug() << "  GLSL Version: " << reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
-//
-//  glViewport(0, 0, width(), height());
-//}
-//
-//void BasicWidget::resizeGL(int w, int h)
-//{
-//  glViewport(0, 0, w, h);
-//}
-//
-//void BasicWidget::paintGL()
-//{
-//  glDisable(GL_DEPTH_TEST);
-//  glDisable(GL_CULL_FACE);
-//
-//  glClearColor(0.f, 0.f, 0.f, 1.f);
-//  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//  // TODO:  render.
-//}
