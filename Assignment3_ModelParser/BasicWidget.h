@@ -26,7 +26,7 @@ private:
    
     unsigned int objectType = 1;
     unsigned int frameType = 1;
-    Obj o = mon;
+    Obj o = bun;
 
 
 protected:
@@ -59,14 +59,14 @@ public:
         // if type = 1 then bunny, if type = 2, then monkey
         if (type == 1)
         {
-            o = mon;
+            o = bun;
             objectType = type;
         }
 
         else
         {
             objectType = type;
-            o = bun;
+            o = mon;
         }
     }
 
