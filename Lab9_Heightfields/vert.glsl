@@ -9,9 +9,9 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
 // We add our sampler here to extract height information
-uniform sampler2D tex;
+uniform sampler2D heightTex;
 
-// We define a new output vec2 for our texture coorinates.
+// We define a new output vec2 for our texture coordinates.
 out vec2 texCoords;
 out vec3 norm;
 out vec3 fragPos;
@@ -20,10 +20,14 @@ void main()
 {
     // TODO:  Extract the height from our heightmap and modify 
     // our input position.
-    vec4 mappedPos = vec4(position, 1.0);
+
+   //float s = texture(heightTex, textureCoords).r;
+
+    vec4 mappedPos = vec4(position.x, 0, position.z, 1.0);
 
     // We have our transformed position set properly now
     gl_Position = projectionMatrix*viewMatrix*modelMatrix*mappedPos;
+
     // Our fragment pos for lighting.
     fragPos = (modelMatrix*vec4(position, 1.0)).xyz;
     // Make sure to transform the normal

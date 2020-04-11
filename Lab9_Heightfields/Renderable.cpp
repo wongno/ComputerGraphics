@@ -10,34 +10,41 @@ Renderable::Renderable() : vbo_(QOpenGLBuffer::VertexBuffer), ibo_(QOpenGLBuffer
 
 Renderable::~Renderable()
 {
-	if (texture_.isCreated()) {
+	if (texture_.isCreated())
+	{
 		texture_.destroy();
 	}
-	if (vbo_.isCreated()) {
+	if (vbo_.isCreated())
+	{
 		vbo_.destroy();
 	}
-	if (ibo_.isCreated()) {
+	if (ibo_.isCreated())
+	{
 		ibo_.destroy();
 	}
-	if (vao_.isCreated()) {
+	if (vao_.isCreated())
+	{
 		vao_.destroy();
 	}
 }
 
 void Renderable::createShaders()
 {
-	QString vertexFilename = "../../vert.glsl";
+	QString vertexFilename = "../vert.glsl";
 	bool ok = shader_.addShaderFromSourceFile(QOpenGLShader::Vertex, vertexFilename);
-	if (!ok) {
+	if (!ok)
+	{
 		qDebug() << shader_.log();
 	}
-	QString fragmentFilename = "../../frag.glsl";
+	QString fragmentFilename = "../frag.glsl";
 	ok = shader_.addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentFilename);
-	if (!ok) {
+	if (!ok)
+	{
 		qDebug() << shader_.log();
 	}
 	ok = shader_.link();
-	if (!ok) {
+	if (!ok)
+	{
 		qDebug() << shader_.log();
 	}
 }
@@ -50,7 +57,8 @@ void Renderable::init(const QVector<QVector3D>& positions, const QVector<QVector
 	// have it here for a later implementation!
 	// We need to make sure our sizes all work out ok.
 	if (positions.size() != texCoords.size() ||
-		positions.size() != normals.size()) {
+		positions.size() != normals.size())
+	{
 		qDebug() << "[Renderable]::init() -- positions size mismatch with normals/texture coordinates";
 		return;
 	}
@@ -65,7 +73,7 @@ void Renderable::init(const QVector<QVector3D>& positions, const QVector<QVector
 
 	// num verts (used to size our vbo)
 	int numVerts = positions.size();
-	vertexSize_ = 3 + 3 + 2;  // Position + normal + texCoord
+	vertexSize_ = 3 + 3 + 2; // Position + normal + texCoord
 	int numVBOEntries = numVerts * vertexSize_;
 
 	// Setup our shader.
@@ -80,7 +88,8 @@ void Renderable::init(const QVector<QVector3D>& positions, const QVector<QVector
 	vbo_.bind();
 	// Create a temporary data array
 	float* data = new float[numVBOEntries];
-	for (int i = 0; i < numVerts; ++i) {
+	for (int i = 0; i < numVerts; ++i)
+	{
 		data[i * vertexSize_ + 0] = positions.at(i).x();
 		data[i * vertexSize_ + 1] = positions.at(i).y();
 		data[i * vertexSize_ + 2] = positions.at(i).z();
@@ -99,7 +108,8 @@ void Renderable::init(const QVector<QVector3D>& positions, const QVector<QVector
 	ibo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	// create a temporary array for our indexes
 	unsigned int* idxAr = new unsigned int[indexes.size()];
-	for (int i = 0; i < indexes.size(); ++i) {
+	for (int i = 0; i < indexes.size(); ++i)
+	{
 		idxAr[i] = indexes.at(i);
 	}
 	ibo_.allocate(idxAr, indexes.size() * sizeof(unsigned int));
@@ -111,7 +121,7 @@ void Renderable::init(const QVector<QVector3D>& positions, const QVector<QVector
 	shader_.enableAttributeArray(1);
 	shader_.setAttributeBuffer(1, GL_FLOAT, 3 * sizeof(float), 3, vertexSize_ * sizeof(float));
 	shader_.enableAttributeArray(2);
-	shader_.setAttributeBuffer(2, GL_FLOAT, (3+3) * sizeof(float), 2, vertexSize_ * sizeof(float));
+	shader_.setAttributeBuffer(2, GL_FLOAT, (3 + 3) * sizeof(float), 2, vertexSize_ * sizeof(float));
 
 	// Release our vao and THEN release our buffers.
 	vao_.release();
@@ -121,20 +131,24 @@ void Renderable::init(const QVector<QVector3D>& positions, const QVector<QVector
 
 void Renderable::update(const qint64 msSinceLastFrame)
 {
-	// For this lab, we want our polygon to rotate. 
+	// For this lab, we want our polygon to rotate.
 	float sec = msSinceLastFrame / 1000.0f;
 	float anglePart = sec * rotationSpeed_ * 360.f;
 	rotationAngle_ += anglePart;
-	while(rotationAngle_ >= 360.0) {
+	while (rotationAngle_ >= 360.0)
+	{
 		rotationAngle_ -= 360.0;
 	}
 }
 
 void Renderable::toggleFillMode()
 {
-	if (isFilled_) {
+	if (isFilled_)
+	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	} else {
+	}
+	else
+	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 	isFilled_ = !isFilled_;
