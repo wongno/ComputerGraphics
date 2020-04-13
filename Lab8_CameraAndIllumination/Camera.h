@@ -10,6 +10,7 @@ protected:
 	QVector3D lookAt_;
 	QVector3D up_;
 	QMatrix4x4 projection_;
+	QMatrix4x4 view;
 
 public:
 	Camera();
@@ -36,5 +37,4 @@ public:
 	QMatrix4x4 getProjectionMatrix() const;
 
 private:
-
 };
