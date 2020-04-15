@@ -3,6 +3,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtOpenGL>
+
 #include <vector>
 
 class Renderable
@@ -14,6 +15,7 @@ protected:
 	QOpenGLShaderProgram shader_;
 	// For now, we have only one texture per object
 	QOpenGLTexture texture_;
+
 	// For now, we have a single unified buffer per object
 	QOpenGLBuffer vbo_;
 	// Make sure we have an index buffer.
@@ -36,18 +38,17 @@ public:
 	Renderable();
 	virtual ~Renderable();
 
-	// When we initialize our renderable, we pass it normals.  We 
+	// When we initialize our renderable, we pass it normals.  We
 	// currently don't use normals in our implementation, but the array is checked
 	// for the appropriate size.  The values can be all 0, but must be the same size as
 	// the position array!
 	virtual void init(std::vector<float>& positions, std::vector<unsigned int>& indexes, const QString& textureFile);
-	virtual void update(const qint64 msSinceLastFrame);
-	virtual void draw(const QMatrix4x4& view, const QMatrix4x4& projection);
+	virtual void update(const float rotation);
+	virtual void draw(const QMatrix4x4& world, const QMatrix4x4& view, const QMatrix4x4& projection);
 
 	void setModelMatrix(const QMatrix4x4& transform);
 	void setRotationAxis(const QVector3D& axis);
 	void setRotationSpeed(float speed);
 
 private:
-
 };

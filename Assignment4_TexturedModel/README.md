@@ -6,8 +6,8 @@
 
 *TODO*: Please edit the following information in your assignment
 
-* Name and partners name(At most 1 partner for this Assignment): Anika Jagow
-* How many hours did it take you to complete this Assignment? 8
+* Name and partners name(At most 1 partner for this Assignment): My name is Noelle Wong and my partner is Anika Jagow
+* How many hours did it take you to complete this Assignment? 10
 * Did you collaborate or share ideas with any other students/TAs/Professors? 
 * Did you use any external resources? 
   * http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/
