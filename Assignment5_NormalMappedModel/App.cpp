@@ -7,8 +7,6 @@ App::App(QWidget* parent) : QMainWindow(parent)
     buildGui();
 }
 
-
-
 App::~App()
 {}
 

@@ -12,7 +12,6 @@ MtlFileReader::MtlFileReader(std::string filename)
 {
     std::ifstream file(filename);
 
-
     // if file isn't there, print out warning
     if (!file)
     {
@@ -24,21 +23,30 @@ MtlFileReader::MtlFileReader(std::string filename)
 
     while (std::getline(file, line))
     {
+
+        if (line.substr(0, 10).find("map_Bump") != std::string::npos)
+        {
+            std::vector<std::string> lineSplit = MtlFileReader::split(line, "\\s+");
+            normalFile = lineSplit[1];
+        }
+
         if (line.substr(0, 6) == "map_Kd")
         {
 
-
             std::vector<std::string> lineSplit = MtlFileReader::split(line, "\\s+");
             textureFile = lineSplit[1];
-
         }
-
     }
 }
 
-std::string MtlFileReader::getPath()
+std::string MtlFileReader::getTextureFile()
 {
     return textureFile;
+}
+
+std::string MtlFileReader::getNormalFile()
+{
+    return normalFile;
 }
 
 std::vector<std::string> MtlFileReader::split(std::string s, std::string regexMatch)

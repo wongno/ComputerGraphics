@@ -3,9 +3,9 @@
 #include <QtGui>
 #include <QtWidgets>
 #include <QtOpenGL>
-#include <string>
 
 #include "Renderable.h"
+#include "Camera.h"
 #include "ObjReader.h"
 
 /**
@@ -16,25 +16,31 @@ class BasicWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 private:
-    QMatrix4x4 model_;
-    QMatrix4x4 view_;
-    QMatrix4x4 projection_;
-
-    // file path
-    std::string filePath;
-
-    // frame type. 1 = textured, 2 = wireframe
-    unsigned int frameType = 1;
+    QMatrix4x4 world_;
+    Camera camera_;
 
     QElapsedTimer frameTimer_;
 
-    QVector<Renderable*> renderables_;
+    Renderable* renderable_;
 
     QOpenGLDebugLogger logger_;
+
+    // Mouse controls.
+    enum MouseControl
+    {
+        NoAction = 0,
+        Rotate,
+        Zoom
+    };
+    QPoint lastMouseLoc_;
+    MouseControl mouseAction_;
 
 protected:
     // Required interaction overrides
     void keyReleaseEvent(QKeyEvent* keyEvent) override;
+    void mousePressEvent(QMouseEvent* mouseEvent) override;
+    void mouseMoveEvent(QMouseEvent* mouseEvent) override;
+    void mouseReleaseEvent(QMouseEvent* mouseEvent) override;
 
     // Required overrides form QOpenGLWidget
     void initializeGL() override;
@@ -47,12 +53,4 @@ public:
 
     // Make sure we have some size that makes sense.
     QSize sizeHint() const { return QSize(800, 600); }
-
-    void setWireframe(int type)
-    {
-        // if type = 1 then solid, if type = 2, then wireframe
-        frameType = type;
-    }
-
-
 };

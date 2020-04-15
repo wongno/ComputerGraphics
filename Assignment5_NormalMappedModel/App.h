@@ -5,7 +5,6 @@
 #include <QtGui>
 #include <QtCore>
 #include <QtWidgets>
-#include <string>
 
 class App : public QMainWindow
 {

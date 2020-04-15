@@ -27,22 +27,20 @@ public:
     struct Vector2
     {
         float s, t;
-
-        // override the < operator so we can use Vector2 as a key in a map
-        bool operator<(const Vector2& ob) const
-        {
-            return s < ob.s || (s == ob.s && t < ob.t);
-        }
     };
 
-    std::vector<float> getVertices();
-    std::vector<float> getNormals();
-    std::vector<float> getVerticesAndTextures();
+    struct VertexData
+    {
+        float x, y, z;    // x,y,z positions
+        float xn, yn, zn; // x,y,z normals
+        float s, t;       // s,t texture coordinates
+    };
+
+    // get vertices
     std::vector<float> getVerticesTexturesNormalsTangents();
     std::vector<unsigned int> getFaces();
-    std::string getMtlFilepath();
-
-    void getCalculatedTangents();
+    std::string getTextureMtlFilepath();
+    std::string getNormalMtlFilePath();
 
     // NOTE:    You may add any helper functions you like in the
     //          private section.
@@ -51,7 +49,11 @@ private:
     std::string objFilePath;
 
     // filepath to .mtl file associated with .obj file
-    std::string mtlFilePath;
+    std::string mtlTexture;
+
+    std::string mtlNormal;
+
+    std::vector<VertexData> vertexDataOut;
 
     // vertices of .obj
     std::vector<Vector3> vertices;
@@ -59,13 +61,9 @@ private:
     std::vector<Vector3> normal;
     // texture values of .obj
     std::vector<Vector2> textures;
-    // face values of .obj
-    std::vector<Vector2> faces;
+
     // vertex indices of face values of .obj
     std::vector<unsigned int> vertexIndices;
-
-    // vertex and texture data for buffer
-    std::vector<float> vertexAndTextures;
 
     // tangent values of .obj
     std::vector<QVector3D> tangents;
@@ -73,9 +71,23 @@ private:
     // bitangents values of .obj
     std::vector<QVector3D> bitangents;
 
-    std::map<ObjReader::Vector2, int> vectorVals;
+    // maps vertex to index position
+    std::map<std::string, int> vectorVals;
 
-    std::vector<QVector3D> getCalculatedTangent(unsigned int position, unsigned int texture);
+    // sets the material info, normal file and texture
+    void getMtlInfo(std::string line, std::string filename);
+
+    // use string to create a vector 3
+    ObjReader::Vector3 setVector3(std::string line);
+
+    // use string to create a vector 2
+    ObjReader::Vector2 setVector2(std::string line);
+
+    // set all tangent and bitangent values for object
+    void getCalculatedTangents();
+
+    // use string to create a vertex data object
+    void setFace(std::string currString);
 
     //splits a string based on regex passed into function
     std::vector<std::string> split(std::string givenString, std::string regexMatch);

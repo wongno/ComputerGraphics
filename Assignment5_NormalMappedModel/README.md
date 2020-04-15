@@ -5,8 +5,8 @@
 
 *TODO*: Please edit the following information in your assignment
 
-* Name and partners name(At most 1 partner for this Assignment): 
-* How many hours did it take you to complete this Assignment? 
+* Name and partners name(At most 1 partner for this Assignment): My name is Noelle Wong, partner is Anika Jagow
+* How many hours did it take you to complete this Assignment? ~15
 * Did you collaborate or share ideas with any other students/TAs/Professors? 
 * Did you use any external resources? 
   * (tbd if any)
